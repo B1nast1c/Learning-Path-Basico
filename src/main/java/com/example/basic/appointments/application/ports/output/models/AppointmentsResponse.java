@@ -1,0 +1,24 @@
+package com.example.basic.appointments.application.ports.output.models;
+
+import com.example.basic.persons.domain.models.Specializations;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AppointmentsResponse {
+    private String requestId;
+    private LocalDateTime requestDate;
+    private String patientIdRequest;
+    private String patientFullName;
+    private Specializations requestSpeciality;
+    private String doctorIdRequest;
+    private String doctorFullName;
+    private String requestDetail;
+}
