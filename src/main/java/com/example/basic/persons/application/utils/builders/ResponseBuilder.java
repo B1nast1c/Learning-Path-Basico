@@ -1,7 +1,8 @@
-package com.example.basic.persons.application.utils;
+package com.example.basic.persons.application.utils.builders;
 
 import com.example.basic.persons.application.ports.ouput.models.GenericResponse;
 import com.example.basic.persons.application.ports.ouput.models.PersonsResponse;
+import com.example.basic.persons.application.utils.Constants;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

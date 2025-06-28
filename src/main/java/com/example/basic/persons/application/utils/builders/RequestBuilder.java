@@ -1,4 +1,4 @@
-package com.example.basic.persons.application.utils;
+package com.example.basic.persons.application.utils.builders;
 
 import com.example.basic.persons.application.ports.input.models.DoctorRequest;
 import com.example.basic.persons.application.ports.input.models.PatientRequest;

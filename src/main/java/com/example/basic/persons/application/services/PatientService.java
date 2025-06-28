@@ -5,7 +5,7 @@ import com.example.basic.persons.application.ports.input.models.PatientRequest;
 import com.example.basic.persons.application.ports.ouput.models.GenericResponse;
 import com.example.basic.persons.application.ports.ouput.repository.PatientRepositoryInterface;
 import com.example.basic.persons.application.utils.*;
-import com.example.basic.persons.domain.models.Patient;
+import com.example.basic.persons.application.utils.builders.ResponseBuilder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -36,8 +36,7 @@ public class PatientService implements PatientUseCase {
     }
 
     @Override public Mono<GenericResponse> createPatient(PatientRequest patient) {
-        Patient mapPatient = RequestBuilder.buildPatientRequest(patient);
-        return ResponseBuilder.buildSavedResponse(patientRepository.createPatient(mapPatient), mapper::mapPatientToResponse);
+        return ResponseBuilder.buildSavedResponse(patientRepository.createPatient(patient), mapper::mapPatientToResponse);
     }
 
     @Override

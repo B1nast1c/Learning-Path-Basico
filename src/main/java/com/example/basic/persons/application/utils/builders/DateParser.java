@@ -1,4 +1,4 @@
-package com.example.basic.persons.application.utils;
+package com.example.basic.persons.application.utils.builders;
 
 import com.example.basic.exceptions.throwables.DateFormatExc;
 
@@ -16,7 +16,6 @@ public class DateParser {
         catch (DateTimeParseException ex) {
            throw new DateFormatExc("Invalid date format, must be dd/MM/YYYY");
         }
-
     }
 }
 

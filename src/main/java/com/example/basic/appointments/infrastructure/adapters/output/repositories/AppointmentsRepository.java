@@ -5,7 +5,7 @@ import com.example.basic.appointments.domain.models.Appointment;
 import com.example.basic.appointments.infrastructure.repositories.AppointmentRepository;
 import com.example.basic.exceptions.throwables.DateFormatExc;
 import com.example.basic.exceptions.throwables.NotFoundExc;
-import com.example.basic.persons.application.utils.DateParser;
+import com.example.basic.persons.application.utils.builders.DateParser;
 import com.example.basic.persons.domain.validations.DateValidations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
