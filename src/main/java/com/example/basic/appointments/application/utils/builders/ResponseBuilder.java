@@ -3,6 +3,7 @@ package com.example.basic.appointments.application.utils.builders;
 import com.example.basic.appointments.application.ports.output.models.AppointmentsResponse;
 import com.example.basic.appointments.application.ports.output.models.GenericResponse;
 import com.example.basic.appointments.application.utils.AppointmentMapper;
+import com.example.basic.appointments.application.utils.AppointmentRequestMapper;
 import com.example.basic.appointments.application.utils.Constants;
 import com.example.basic.appointments.domain.models.Appointment;
 import reactor.core.publisher.Flux;
@@ -45,13 +46,13 @@ public class ResponseBuilder {
                             .build()));
     }
 
-    public static <T> Mono<GenericResponse> buildSavedResponse(Mono<T> source, AppointmentMapper mapper) {
+    public static <T> Mono<GenericResponse> buildSavedResponse(Mono<T> source, AppointmentRequestMapper mapper) {
         return source
                 .flatMap(item ->
                         Mono.just(GenericResponse.builder()
                             .responseStatus(Constants.VALID)
                             .details("Saving changes in data")
-                            .data(List.of(mapper.mapAppointmentToResponse(item)))
+                            .data(List.of(mapper.mapAppointmentRequestToResponse(item)))
                             .build()))
                 .onErrorResume(error ->
                         Mono.just(GenericResponse

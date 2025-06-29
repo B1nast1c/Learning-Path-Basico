@@ -6,6 +6,7 @@ import com.example.basic.appointments.application.ports.input.models.RequestMode
 import com.example.basic.appointments.application.ports.output.models.GenericResponse;
 import com.example.basic.appointments.application.ports.output.repository.RequestRepositoryInterface;
 import com.example.basic.appointments.application.utils.AppointmentMapper;
+import com.example.basic.appointments.application.utils.AppointmentRequestMapper;
 import com.example.basic.appointments.application.utils.Constants;
 import com.example.basic.appointments.application.utils.builders.AppointmentBuilder;
 import com.example.basic.appointments.application.utils.builders.RequestBuilder;
@@ -22,15 +23,15 @@ import java.util.List;
 @Service
 public class RequestService implements AppointmentRequestUseCases {
     private final RequestRepositoryInterface requestRepository;
-    private final AppointmentMapper appointmentMapper;
+    private final AppointmentRequestMapper requestMapper;
     private final AppointmentUseCases appointmentService;
 
     public RequestService(
         RequestRepositoryInterface repositoryInterface,
-        AppointmentMapper mapper,
+        AppointmentRequestMapper mapper,
         AppointmentUseCases appointmentService) {
         this.requestRepository = repositoryInterface;
-        this.appointmentMapper = mapper;
+        this.requestMapper = mapper;
         this.appointmentService = appointmentService;
     }
 
@@ -48,7 +49,7 @@ public class RequestService implements AppointmentRequestUseCases {
             .flatMap(createdRequest ->
                         ResponseBuilder.buildSavedResponse(
                             Mono.just(createdRequest),
-                            appointmentMapper
+                            requestMapper
                         ))
             .onErrorResume(error -> Mono.just(
                 GenericResponse.builder()

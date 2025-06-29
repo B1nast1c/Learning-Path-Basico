@@ -24,5 +24,6 @@ public class Appointment {
     private String patientFullName;
     @Indexed
     private LocalDateTime appointmentDate;
+    private String appointmentSpeciality;
     private AppointmentStatus appointmentStatus;
 }

@@ -4,6 +4,7 @@ import com.example.basic.persons.application.ports.ouput.models.PersonsResponse;
 import com.example.basic.persons.domain.models.Doctor;
 import com.example.basic.persons.domain.models.Patient;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class PersonMapper {
     private final ModelMapper mapper;
 
-    public PersonMapper(ModelMapper modelMapper) {
+    public PersonMapper(@Qualifier("personMapper") ModelMapper modelMapper) {
         this.mapper = modelMapper;
     }
 
