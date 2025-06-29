@@ -92,6 +92,6 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
         log.info("request.adapters.output.repository::getAppointmentsByPersons()");
 
         return appointmentRepository.findByPatientIdAndDoctorId(patientId, doctorId)
-            .switchIfEmpty(Mono.error(new NotFoundExc("The appointment made by the patient" + patientId + "with the doctor" + doctorId + "does not exist")));
+            .switchIfEmpty(Mono.error(new NotFoundExc("The appointment made by the patient " + patientId + " with the doctor " + doctorId + " does not exist")));
     }
 }
