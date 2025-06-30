@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Implementación del repositorio de salida para operaciones con doctores.
+ */
 @Slf4j
 @Component
 public class DoctorsRepository implements DoctorRepositoryInterface {
@@ -20,6 +23,12 @@ public class DoctorsRepository implements DoctorRepositoryInterface {
     private final DoctorRepository doctorRepository;
     private final DoctorValidationService doctorValidationService;
 
+    /**
+     * Constructor que inyecta el repositorio y el servicio de validación.
+     *
+     * @param repository Repositorio de acceso a datos de doctores.
+     * @param validationService Servicio de validación de doctores.
+     */
     public DoctorsRepository(
         DoctorRepository repository,
         DoctorValidationService validationService) {
@@ -27,12 +36,25 @@ public class DoctorsRepository implements DoctorRepositoryInterface {
         this.doctorValidationService = validationService;
     }
 
+    /**
+     * Obtiene todos los doctores registrados.
+     *
+     * @return Flujo reactivo con todos los doctores.
+     */
     @Override
     public Flux<Doctor> findAll() {
         log.info("doctor.adapters.output.repository::findAll()");
         return doctorRepository.findAll();
     }
 
+    /**
+     * Busca doctores por especialidad.
+     *
+     * @param speciality Especialidad médica.
+     * @return Flujo reactivo con los doctores que coinciden con la especialidad.
+     * @throws SpecialityExc Si la especialidad no es válida.
+     * @throws NotFoundExc Si no se encuentran doctores.
+     */
     @Override
     public Flux<Doctor> findBySpeciality(String speciality) {
         log.info("doctor.adapters.output.repository::findBySpeciality()");
@@ -46,6 +68,13 @@ public class DoctorsRepository implements DoctorRepositoryInterface {
             .switchIfEmpty(Mono.error(new NotFoundExc("There are no doctors available")));
     }
 
+    /**
+     * Busca un doctor por su ID.
+     *
+     * @param doctorId ID del doctor.
+     * @return Mono con el doctor encontrado.
+     * @throws NotFoundExc Si no se encuentra el doctor.
+     */
     @Override
     public Mono<Doctor> findById(String doctorId) {
         log.info("doctor.adapters.output.repository::findById()");
@@ -53,6 +82,14 @@ public class DoctorsRepository implements DoctorRepositoryInterface {
             .switchIfEmpty(Mono.error(new NotFoundExc("Doctor not found")));
     }
 
+    /**
+     * Busca doctores por nombre y apellido.
+     *
+     * @param name Nombre del doctor.
+     * @param surname Apellido del doctor.
+     * @return Flujo reactivo con los doctores encontrados.
+     * @throws NotFoundExc Si no se encuentran coincidencias.
+     */
     @Override
     public Flux<Doctor> findByFullName(String name, String surname) {
         log.info("doctor.adapters.output.repository::findByFullName()");
@@ -61,6 +98,14 @@ public class DoctorsRepository implements DoctorRepositoryInterface {
             .switchIfEmpty(Mono.error(new NotFoundExc("Not enough data to retrieve")));
     }
 
+    /**
+     * Crea un nuevo doctor si no existe previamente.
+     *
+     * @param doctor Objeto Doctor a crear.
+     * @return Mono con el doctor creado.
+     * @throws DuplicateExc Si el doctor ya existe.
+     * @throws Exception Si ocurre un error de validación.
+     */
     @Override
     public Mono<Doctor> createDoctor(Doctor doctor) {
         log.info("doctor.adapters.output.repository::createDoctor()");
@@ -78,6 +123,13 @@ public class DoctorsRepository implements DoctorRepositoryInterface {
             .switchIfEmpty(Mono.error(new DuplicateExc("Entity already in the database")));
     }
 
+    /**
+     * Elimina (desactiva) un doctor por su ID.
+     *
+     * @param doctorId ID del doctor a eliminar.
+     * @return Mono con el doctor modificado.
+     * @throws NotFoundExc Si no se encuentra el doctor activo.
+     */
     @Override
     public Mono<Doctor> deleteDoctor(String doctorId) {
         log.info("doctor.adapters.output.repository::deleteDoctor()");
