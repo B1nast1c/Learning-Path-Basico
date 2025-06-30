@@ -4,6 +4,9 @@ import com.example.basic.appointments.domain.models.Appointment;
 import com.example.basic.appointments.domain.models.AppointmentRequest;
 import com.example.basic.appointments.domain.models.AppointmentStatus;
 
+/**
+ * Constructor de citas médicas generadas por una solicitud.
+ */
 public class AppointmentBuilder {
     public static Appointment buildAppointmentFromRequest(AppointmentRequest request) {
         return Appointment.builder()

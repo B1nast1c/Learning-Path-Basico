@@ -15,17 +15,29 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 
+/**
+ * Implementación del repositorio de citas médicas.
+ * Esta clase se encarga de interactuar con la base de datos MongoDB y aplicar validaciones
+ * antes de guardar o consultar citas. Implementa la interfaz AppointmentRepositoryInterface.
+ */
 @Slf4j
 @Component
 public class AppointmentsRepository implements AppointmentRepositoryInterface {
+
     private final AppointmentRepository appointmentRepository;
     private final AppointmentValidationService validationService;
 
+    /**
+     * Constructor que recibe el repositorio de Mongo y el servicio de validación.
+     */
     public AppointmentsRepository(AppointmentRepository repository, AppointmentValidationService validationService) {
         this.appointmentRepository = repository;
         this.validationService = validationService;
     }
 
+    /**
+     * Guarda una nueva cita después de validar su fecha.
+     */
     @Override
     public Mono<Appointment> saveAppointment(Appointment appointment) {
         log.info("request.adapters.output.repository::saveAppointment()");
@@ -40,6 +52,9 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
         }
     }
 
+    /**
+     * Cancela una cita cambiando su estado a CANCELED.
+     */
     @Override
     public Mono<Appointment> updateAppointment(String appointmentId) {
         log.info("request.adapters.output.repository::updateAppointment");
@@ -53,6 +68,9 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
             .flatMap(appointmentRepository::save);
     }
 
+    /**
+     * Obtiene una cita por su ID, solo si está activa.
+     */
     @Override
     public Mono<Appointment> getAppointmentById(String appointmentId) {
         log.info("request.adapters.output.repository::getAppointmentById()");
@@ -62,6 +80,9 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
             .switchIfEmpty(Mono.error(new NotFoundExc("Appointment not found")));
     }
 
+    /**
+     * Obtiene todas las citas activas de un paciente.
+     */
     @Override
     public Flux<Appointment> getAppointmentsByPatient(String patientId) {
         log.info("request.adapters.output.repository::getAppointmentsByPatient()");
@@ -71,6 +92,9 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
             .switchIfEmpty(Mono.error(new NotFoundExc("The patient has no appointments")));
     }
 
+    /**
+     * Obtiene todas las citas activas de un doctor.
+     */
     @Override
     public Flux<Appointment> getAppointmentsByDoctor(String doctorId) {
         log.info("request.adapters.output.repository::getAppointmentsByDoctor()");
@@ -80,6 +104,9 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
             .switchIfEmpty(Mono.error(new NotFoundExc("No appointments have been registered")));
     }
 
+    /**
+     * Obtiene todas las citas activas dentro de un rango de fechas.
+     */
     @Override
     public Flux<Appointment> getAppointmentsByDateRange(String initDate, String endDate) {
         log.info("request.adapters.output.repository::getAppointmentsByDateRange()");
@@ -98,12 +125,16 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
         }
     }
 
+    /**
+     * Obtiene todas las citas activas entre un paciente y un doctor específicos.
+     */
     @Override
     public Flux<Appointment> getAppointmentsByPersons(String patientId, String doctorId) {
         log.info("request.adapters.output.repository::getAppointmentsByPersons()");
 
         return appointmentRepository.findByPatientIdAndDoctorId(patientId, doctorId)
             .filter(foundAppointment -> foundAppointment.getAppointmentStatus().equals(AppointmentStatus.ACTIVE))
-            .switchIfEmpty(Mono.error(new NotFoundExc("The appointment made by the patient " + patientId + " with the doctor " + doctorId + " does not exist")));
+            .switchIfEmpty(Mono.error(new NotFoundExc(
+                "The appointment made by the patient " + patientId + " with the doctor " + doctorId + " does not exist")));
     }
 }

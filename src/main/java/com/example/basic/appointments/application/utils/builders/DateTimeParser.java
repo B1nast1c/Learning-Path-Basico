@@ -7,6 +7,9 @@ import java.time.format.DateTimeParseException;
 
 import java.time.LocalDateTime;
 
+/**
+ * Constructor de fechas personalizadas.
+ */
 public class DateTimeParser {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");

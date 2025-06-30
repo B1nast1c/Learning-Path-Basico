@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Generador de índices personalizados para solicitudes y citas médicas..
+ */
 @Slf4j
 public class IndexBuilder {
     public static String generateRequestId(String requestDate, String patientId, String doctorId) {

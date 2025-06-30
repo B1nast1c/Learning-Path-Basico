@@ -2,7 +2,6 @@ package com.example.basic.appointments.application.utils.builders;
 
 import com.example.basic.appointments.application.ports.output.models.AppointmentsResponse;
 import com.example.basic.appointments.application.ports.output.models.GenericResponse;
-import com.example.basic.appointments.application.utils.AppointmentMapper;
 import com.example.basic.appointments.application.utils.AppointmentRequestMapper;
 import com.example.basic.appointments.application.utils.Constants;
 import com.example.basic.appointments.domain.models.Appointment;
@@ -13,6 +12,9 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.function.Function;
 
+/**
+ * Constructor de formato de respuestas genéricas para las solicitudes.
+ */
 public class ResponseBuilder {
     public static <T> Mono<GenericResponse> buildListResponse(Flux<T> source, Function<List<T>, List<AppointmentsResponse>> mapper) {
         return source

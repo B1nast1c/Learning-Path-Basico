@@ -5,8 +5,10 @@ import com.example.basic.appointments.domain.models.AppointmentRequest;
 import com.example.basic.exceptions.throwables.SpecialityExc;
 import com.example.basic.persons.domain.models.Specializations;
 
+/**
+ * Constructor de citas médicas generadas por una solicitud.
+ */
 public class RequestBuilder {
-
     public static AppointmentRequest buildAppointmentRequest(RequestModel request) {
         Specializations specialization;
         if (request.getRequestSpeciality() != null && !request.getRequestSpeciality().isBlank()) {

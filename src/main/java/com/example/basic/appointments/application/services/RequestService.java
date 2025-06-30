@@ -18,13 +18,25 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
+/**
+ * Servicio que maneja la lógica para crear solicitudes de citas.
+ * Este servicio toma una solicitud, la guarda, y si es válida, también crea una cita médica.
+ */
 @Slf4j
 @Service
 public class RequestService implements AppointmentRequestUseCases {
+
     private final RequestRepositoryInterface requestRepository;
     private final AppointmentRequestMapper requestMapper;
     private final AppointmentUseCases appointmentService;
 
+    /**
+     * Constructor del servicio de solicitudes de citas.
+     *
+     * @param repositoryInterface Repositorio para guardar solicitudes.
+     * @param mapper Herramienta para convertir objetos entre capas.
+     * @param appointmentService Servicio que maneja la creación de citas.
+     */
     public RequestService(
         RequestRepositoryInterface repositoryInterface,
         AppointmentRequestMapper mapper,
@@ -34,6 +46,12 @@ public class RequestService implements AppointmentRequestUseCases {
         this.appointmentService = appointmentService;
     }
 
+    /**
+     * Crea una nueva solicitud de cita. Si la solicitud es válida, también se crea la cita médica.
+     *
+     * @param request Datos de la solicitud.
+     * @return Respuesta indicando si la operación fue exitosa o si hubo un error.
+     */
     @Override
     public Mono<GenericResponse> createRequest(RequestModel request) {
         return Mono.fromCallable(() -> RequestBuilder.buildAppointmentRequest(request))
@@ -46,10 +64,10 @@ public class RequestService implements AppointmentRequestUseCases {
                     })
                     .thenReturn(buildRequest))
             .flatMap(createdRequest ->
-                        ResponseBuilder.buildSavedResponse(
-                            Mono.just(createdRequest),
-                            requestMapper
-                        ))
+                ResponseBuilder.buildSavedResponse(
+                    Mono.just(createdRequest),
+                    requestMapper
+                ))
             .onErrorResume(error -> Mono.just(
                 GenericResponse.builder()
                     .responseStatus(Constants.ERROR)
