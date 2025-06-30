@@ -1,8 +1,12 @@
 package com.example.basic.persons.application.ports.input.models;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@Builder
 public class DoctorRequest {
     private String personID;
     private String personName;

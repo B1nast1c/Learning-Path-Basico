@@ -1,6 +1,7 @@
 package com.example.basic.persons.domain.services;
 
 
+import com.example.basic.exceptions.throwables.GenericExc;
 import com.example.basic.exceptions.throwables.SpecialityExc;
 import com.example.basic.persons.domain.models.Doctor;
 import com.example.basic.persons.domain.validations.FieldsValidations;
@@ -15,7 +16,7 @@ public class DoctorValidationService {
             throw new SpecialityExc("Invalid doctor speciality");
         }
         if (!FieldsValidations.validateInput(doctor.getPersonID())) {
-            throw new SpecialityExc("Invalid doctor ID format");
+            throw new GenericExc("Invalid doctor ID format");
         }
     }
 

@@ -31,12 +31,12 @@ public class PatientController {
     }
 
     @PostMapping("/create")
-    public Mono<GenericResponse> createDoctor(@RequestBody PatientRequest request) {
+    public Mono<GenericResponse> createPatient(@RequestBody PatientRequest request) {
         return patientUseCase.createPatient(request);
     }
 
     @PutMapping("/remove/{patientId}")
-    public Mono<GenericResponse> createDoctor(@PathVariable String patientId) {
+    public Mono<GenericResponse> removePatient(@PathVariable String patientId) {
         return patientUseCase.deletePatient(patientId);
     }
 }
