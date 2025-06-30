@@ -57,12 +57,4 @@ class PatientControllerTest {
         Mono<GenericResponse> result = patientController.createPatient(PatientRequest.builder().build());
         Assertions.assertNull(result);
     }
-
-    @Test
-    void testRemovePatient() {
-        when(patientUseCase.deletePatient(anyString())).thenReturn(null);
-
-        Mono<GenericResponse> result = patientController.removePatient("patientId");
-        Assertions.assertNull(result);
-    }
 }

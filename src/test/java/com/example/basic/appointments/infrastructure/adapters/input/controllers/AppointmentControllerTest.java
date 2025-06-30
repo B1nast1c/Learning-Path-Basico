@@ -1,19 +1,26 @@
 package com.example.basic.appointments.infrastructure.adapters.input.controllers;
 
+import com.example.basic.appointments.application.ports.input.cases.AppointmentRequestUseCases;
+import com.example.basic.appointments.application.ports.input.cases.AppointmentUseCases;
+import com.example.basic.appointments.application.ports.input.models.RequestModel;
+import com.example.basic.appointments.application.ports.output.models.GenericResponse;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-//import static org.mockito.Mockito.*;
+import reactor.core.publisher.Mono;
+
+import static org.mockito.Mockito.*;
+
 class AppointmentControllerTest {
     @Mock
-    com.example.basic.appointments.application.ports.input.cases.AppointmentRequestUseCases appointmentRequestUseCases;
+    AppointmentRequestUseCases appointmentRequestUseCases;
     @Mock
-    com.example.basic.appointments.application.ports.input.cases.AppointmentUseCases appointmentUseCases;
+    AppointmentUseCases appointmentUseCases;
     @InjectMocks
-    com.example.basic.appointments.infrastructure.adapters.input.controllers.AppointmentController appointmentController;
+    AppointmentController appointmentController;
 
     @BeforeEach
     void setUp() {
@@ -21,60 +28,58 @@ class AppointmentControllerTest {
     }
 
     @Test
-    void testRequestAppointment(){
-        when(appointmentRequestUseCases.createRequest(any(com.example.basic.appointments.application.ports.input.models.RequestModel.class))).thenReturn(null);
+    void testRequestAppointment() {
+        when(appointmentRequestUseCases.createRequest(any(RequestModel.class))).thenReturn(null);
 
-        reactor.core.publisher.Mono<com.example.basic.appointments.application.ports.output.models.GenericResponse> result = appointmentController.requestAppointment(new com.example.basic.appointments.application.ports.input.models.RequestModel("patientIdRequest", "requestSpeciality", "doctorIdRequest", "requestDate", "requestDetail"));
-        Assertions.assertEquals(null, result);
+        Mono<GenericResponse> result = appointmentController.requestAppointment(new RequestModel("patientIdRequest", "requestSpeciality", "doctorIdRequest", "requestDate", "requestDetail"));
+        Assertions.assertNull(result);
     }
 
     @Test
-    void testCancelAppointment(){
+    void testCancelAppointment() {
         when(appointmentUseCases.cancelAppointment(anyString())).thenReturn(null);
 
-        reactor.core.publisher.Mono<com.example.basic.appointments.application.ports.output.models.GenericResponse> result = appointmentController.cancelAppointment("appointmentId");
-        Assertions.assertEquals(null, result);
+        Mono<GenericResponse> result = appointmentController.cancelAppointment("appointmentId");
+        Assertions.assertNull(result);
     }
 
     @Test
-    void testGetAppointmentDetail(){
+    void testGetAppointmentDetail() {
         when(appointmentUseCases.getAppointmentDetails(anyString())).thenReturn(null);
 
-        reactor.core.publisher.Mono<com.example.basic.appointments.application.ports.output.models.GenericResponse> result = appointmentController.getAppointmentDetail("appointmentId");
-        Assertions.assertEquals(null, result);
+        Mono<GenericResponse> result = appointmentController.getAppointmentDetail("appointmentId");
+        Assertions.assertNull(result);
     }
 
     @Test
-    void testGetAppointmentsDetailByDoctor(){
+    void testGetAppointmentsDetailByDoctor() {
         when(appointmentUseCases.getDoctorAppointments(anyString())).thenReturn(null);
 
-        reactor.core.publisher.Mono<com.example.basic.appointments.application.ports.output.models.GenericResponse> result = appointmentController.getAppointmentsDetailByDoctor("doctorId");
-        Assertions.assertEquals(null, result);
+        Mono<GenericResponse> result = appointmentController.getAppointmentsDetailByDoctor("doctorId");
+        Assertions.assertNull(result);
     }
 
     @Test
-    void testGetAppointmentsDetailByPatient(){
+    void testGetAppointmentsDetailByPatient() {
         when(appointmentUseCases.getPatientAppointments(anyString())).thenReturn(null);
 
-        reactor.core.publisher.Mono<com.example.basic.appointments.application.ports.output.models.GenericResponse> result = appointmentController.getAppointmentsDetailByPatient("patientId");
-        Assertions.assertEquals(null, result);
+        Mono<GenericResponse> result = appointmentController.getAppointmentsDetailByPatient("patientId");
+        Assertions.assertNull(result);
     }
 
     @Test
-    void testGetAppointmentsBetween(){
+    void testGetAppointmentsBetween() {
         when(appointmentUseCases.getAppointmentsIn(anyString(), anyString())).thenReturn(null);
 
-        reactor.core.publisher.Mono<com.example.basic.appointments.application.ports.output.models.GenericResponse> result = appointmentController.getAppointmentsBetween("initDate", "endDate");
-        Assertions.assertEquals(null, result);
+        Mono<GenericResponse> result = appointmentController.getAppointmentsBetween("initDate", "endDate");
+        Assertions.assertNull(result);
     }
 
     @Test
-    void testGetAppointmentsPersons(){
+    void testGetAppointmentsPersons() {
         when(appointmentUseCases.getSpecificAppointment(anyString(), anyString())).thenReturn(null);
 
-        reactor.core.publisher.Mono<com.example.basic.appointments.application.ports.output.models.GenericResponse> result = appointmentController.getAppointmentsPersons("patientId", "doctorId");
-        Assertions.assertEquals(null, result);
+        Mono<GenericResponse> result = appointmentController.getAppointmentsPersons("patientId", "doctorId");
+        Assertions.assertNull(result);
     }
 }
-
-//Generated with love by TestMe :) Please raise issues & feature requests at: https://weirddev.com/forum#!/testme

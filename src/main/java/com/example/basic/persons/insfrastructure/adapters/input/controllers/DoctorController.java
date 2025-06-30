@@ -43,7 +43,7 @@ public class DoctorController {
     }
 
     @PutMapping("/remove/{doctorId}")
-    public Mono<GenericResponse> createDoctor(@PathVariable String doctorId) {
+    public Mono<GenericResponse> removeDoctor(@PathVariable String doctorId) {
         return doctorUseCase.removeDoctor(doctorId);
     }
 }

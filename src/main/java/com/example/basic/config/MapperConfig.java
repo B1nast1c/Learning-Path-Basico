@@ -2,8 +2,6 @@ package com.example.basic.config;
 
 import com.example.basic.appointments.application.ports.output.models.AppointmentsResponse;
 import com.example.basic.appointments.domain.models.Appointment;
-import com.example.basic.persons.domain.models.Specializations;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Qualifier;

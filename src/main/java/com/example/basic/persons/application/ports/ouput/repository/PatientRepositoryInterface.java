@@ -10,5 +10,4 @@ public interface PatientRepositoryInterface {
     Flux<Patient> findByFullName(String name, String surname);
     Flux<Patient> findByBirthDate(String initDate, String endDate);
     Mono<Patient> createPatient(PatientRequest request);
-    Mono<Patient> deletePatient(String patientId);
 }

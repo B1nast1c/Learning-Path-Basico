@@ -2,31 +2,65 @@ package com.example.basic.appointments.domain.validations;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 class DateValidationsTest {
 
     @Test
-    void testValidateDates(){
-        boolean result = DateValidations.validateDates(java.time.LocalDateTime.of(2025, java.time.Month.JUNE, 30, 1, 2, 29), java.time.LocalDateTime.of(2025, java.time.Month.JUNE, 30, 1, 2, 29));
-        Assertions.assertEquals(true, result);
+    void validateDates() {
+        LocalDateTime requested = LocalDateTime.of(2025, 6, 29, 10, 0);
+        LocalDateTime registered = LocalDateTime.of(2025, 6, 29, 11, 0);
+
+        Assertions.assertTrue(DateValidations.validateDates(requested, registered));
     }
 
     @Test
-    void testValidateHour(){
-        boolean result = DateValidations.validateHour(java.time.LocalDateTime.of(2025, java.time.Month.JUNE, 30, 1, 2, 29));
-        Assertions.assertEquals(true, result);
+    void validateHourWorkingHours() {
+        LocalDateTime date = LocalDateTime.of(2025, 6, 29, 9, 0);
+
+        Assertions.assertTrue(DateValidations.validateHour(date));
     }
 
     @Test
-    void testIsYearValid(){
-        boolean result = DateValidations.isYearValid(0);
-        Assertions.assertEquals(true, result);
+    void validateHourWorkingHoursError() {
+        LocalDateTime date = LocalDateTime.of(2025, 6, 29, 7, 59);
+
+        Assertions.assertFalse(DateValidations.validateHour(date));
     }
 
     @Test
-    void testValidateDateRanges(){
-        boolean result = DateValidations.validateDateRanges(java.time.LocalDate.of(2025, java.time.Month.JUNE, 30), java.time.LocalDate.of(2025, java.time.Month.JUNE, 30));
-        Assertions.assertEquals(true, result);
+    void isYearValid() {
+        Assertions.assertTrue(DateValidations.isYearValid(2000));
+    }
+
+    @Test
+    void isYearValidError() {
+        Assertions.assertFalse(DateValidations.isYearValid(3000));
+    }
+
+    @Test
+    void validateDateRangesDatesOrder() {
+        LocalDate start = LocalDate.of(2025, 1, 1);
+        LocalDate end = LocalDate.of(2025, 12, 31);
+
+        Assertions.assertTrue(DateValidations.validateDateRanges(start, end));
+    }
+
+    @Test
+    void validateDateRangesOrderError() {
+        LocalDate start = LocalDate.of(2025, 12, 31);
+        LocalDate end = LocalDate.of(2025, 1, 1);
+
+        Assertions.assertFalse(DateValidations.validateDateRanges(start, end));
+    }
+
+    @Test
+    void validateDateRangesInvalidYear() {
+        LocalDate start = LocalDate.of(1800, 1, 1);
+        LocalDate end = LocalDate.of(2025, 1, 1);
+
+        Assertions.assertFalse(DateValidations.validateDateRanges(start, end));
     }
 }
-
-//Generated with love by TestMe :) Please raise issues & feature requests at: https://weirddev.com/forum#!/testme

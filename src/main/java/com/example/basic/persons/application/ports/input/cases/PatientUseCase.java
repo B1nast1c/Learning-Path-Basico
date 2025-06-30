@@ -9,5 +9,4 @@ public interface PatientUseCase {
     Mono<GenericResponse> getPatientsByName(String name, String surname);
     Mono<GenericResponse> getPatientsByDate(String initDate, String endDate);
     Mono<GenericResponse> createPatient(PatientRequest patient);
-    Mono<GenericResponse> deletePatient(String patientId);
 }

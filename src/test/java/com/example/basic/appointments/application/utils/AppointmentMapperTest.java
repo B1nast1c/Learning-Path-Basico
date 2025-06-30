@@ -1,22 +1,56 @@
 package com.example.basic.appointments.application.utils;
 
+import com.example.basic.appointments.application.ports.output.models.AppointmentsResponse;
+import com.example.basic.appointments.domain.models.Appointment;
+import com.example.basic.appointments.domain.models.AppointmentStatus;
+import com.example.basic.persons.domain.models.Specializations;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-class AppointmentMapperTest {
-    
-    com.example.basic.appointments.application.utils.AppointmentMapper appointmentMapper = new com.example.basic.appointments.application.utils.AppointmentMapper(new org.modelmapper.ModelMapper());
+import org.modelmapper.ModelMapper;
 
-    @Test
-    void testMapAppointmentToResponse(){
-        com.example.basic.appointments.application.ports.output.models.AppointmentsResponse result = appointmentMapper.mapAppointmentToResponse(null);
-        Assertions.assertEquals(new com.example.basic.appointments.application.ports.output.models.AppointmentsResponse("requestId", java.time.LocalDateTime.of(2025, java.time.Month.JUNE, 30, 11, 27, 16), "patientIdRequest", "patientFullName", "doctorIdRequest", "doctorFullName", "requestDetail"), result);
+import java.time.LocalDateTime;
+import java.util.List;
+
+class AppointmentMapperTest {
+    ModelMapper modelMapper;
+    AppointmentMapper appointmentMapper;
+    Appointment appointment;
+
+    @BeforeEach
+    void setUp() {
+        modelMapper = new ModelMapper();
+        appointmentMapper = new AppointmentMapper(new ModelMapper());
+
+        appointment = Appointment.builder()
+            .appointmentId("APT-TEST")
+            .requestId("REQ-TEST")
+            .patientId("PATIENT-ID")
+            .patientFullName("PATIENT")
+            .doctorId("DOCTOR-ID")
+            .doctorFullName("DOCTOR")
+            .appointmentDate(LocalDateTime.now())
+            .appointmentSpeciality(String.valueOf(Specializations.OBSTETRICS))
+            .appointmentStatus(AppointmentStatus.ACTIVE)
+            .build();
     }
 
     @Test
-    void testMapAppointmentsToResponse(){
-        java.util.List<com.example.basic.appointments.application.ports.output.models.AppointmentsResponse> result = appointmentMapper.mapAppointmentsToResponse(java.util.List.of(null));
-        Assertions.assertEquals(java.util.List.of(new com.example.basic.appointments.application.ports.output.models.AppointmentsResponse("requestId", java.time.LocalDateTime.of(2025, java.time.Month.JUNE, 30, 11, 27, 16), "patientIdRequest", "patientFullName", "doctorIdRequest", "doctorFullName", "requestDetail")), result);
+    void testMapAppointmentToResponse() {
+        AppointmentsResponse result = appointmentMapper.mapAppointmentToResponse(appointment);
+
+        Assertions.assertEquals(appointment.getRequestId(), result.getRequestId());
+        Assertions.assertEquals(appointment.getPatientFullName(), result.getPatientFullName());
+        Assertions.assertEquals(appointment.getDoctorFullName(), result.getDoctorFullName());
+    }
+
+    @Test
+    void testMapAppointmentsToResponse() {
+        List<AppointmentsResponse> result = appointmentMapper.mapAppointmentsToResponse(List.of(appointment));
+        AppointmentsResponse gotResult = result.get(0);
+
+        Assertions.assertEquals(appointment.getRequestId(), gotResult.getRequestId());
+        Assertions.assertEquals(appointment.getPatientFullName(), gotResult.getPatientFullName());
+        Assertions.assertEquals(appointment.getDoctorFullName(), gotResult.getDoctorFullName());
     }
 }
-
-//Generated with love by TestMe :) Please raise issues & feature requests at: https://weirddev.com/forum#!/testme

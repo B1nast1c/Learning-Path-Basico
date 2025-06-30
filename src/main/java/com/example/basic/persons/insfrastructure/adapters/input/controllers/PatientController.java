@@ -34,9 +34,4 @@ public class PatientController {
     public Mono<GenericResponse> createPatient(@RequestBody PatientRequest request) {
         return patientUseCase.createPatient(request);
     }
-
-    @PutMapping("/remove/{patientId}")
-    public Mono<GenericResponse> removePatient(@PathVariable String patientId) {
-        return patientUseCase.deletePatient(patientId);
-    }
 }

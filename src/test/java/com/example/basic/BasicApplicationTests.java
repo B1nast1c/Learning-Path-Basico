@@ -8,6 +8,7 @@ class BasicApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// Configuración de Spring
 	}
 
 }

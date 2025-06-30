@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class PatientValidationServiceTest {
-
     private final PatientValidationService service = new PatientValidationService();
     private Patient patient;
 

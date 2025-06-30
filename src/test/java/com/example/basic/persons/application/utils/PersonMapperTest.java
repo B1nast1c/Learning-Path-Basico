@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersonMapperTest {
 
-    private PersonMapper personMapper;
-    private static Patient patient;
-    private static Doctor doctor;
+    PersonMapper personMapper;
+    static Patient patient;
+    static Doctor doctor;
 
     @BeforeEach
     void setUp() {

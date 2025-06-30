@@ -80,17 +80,4 @@ public class PatientsRepository implements PatientRepositoryInterface {
             })
             .switchIfEmpty(Mono.error(new DuplicateExc("Entity already in the database")));
     }
-
-    @Override
-    public Mono<Patient> deletePatient(String patientId) {
-        log.info("patient.adapters.output.repository::deletePatient()");
-        return patientRepository.findByPersonID(patientId)
-            .filter(Person::isActive)
-            .flatMap(found -> {
-                found.setActive(Boolean.FALSE);
-                return patientRepository.save(found)
-                    .doOnSuccess(deleted -> log.info("Entity deleted successfully"));
-            })
-            .switchIfEmpty(Mono.error(new NotFoundExc("Cannot find an entity to modify")));
-    }
 }

@@ -38,9 +38,4 @@ public class PatientService implements PatientUseCase {
     @Override public Mono<GenericResponse> createPatient(PatientRequest patient) {
         return ResponseBuilder.buildSavedResponse(patientRepository.createPatient(patient), mapper::mapPatientToResponse);
     }
-
-    @Override
-    public Mono<GenericResponse> deletePatient(String patientId) {
-        return ResponseBuilder.buildSavedResponse(patientRepository.deletePatient(patientId), mapper::mapPatientToResponse);
-    }
 }

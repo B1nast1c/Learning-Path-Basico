@@ -64,10 +64,10 @@ class DoctorControllerTest {
     }
 
     @Test
-    void testCreateDoctor2(){
+    void testRemoveDoctor(){
         when(doctorUseCase.removeDoctor(anyString())).thenReturn(null);
 
-        Mono<GenericResponse> result = doctorController.createDoctor("doctorId");
+        Mono<GenericResponse> result = doctorController.removeDoctor("doctorId");
         Assertions.assertNull(result);
     }
 }
