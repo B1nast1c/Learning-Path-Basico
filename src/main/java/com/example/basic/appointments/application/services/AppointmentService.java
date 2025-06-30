@@ -5,11 +5,14 @@ import com.example.basic.appointments.application.ports.output.models.Appointmen
 import com.example.basic.appointments.application.ports.output.models.GenericResponse;
 import com.example.basic.appointments.application.ports.output.repository.AppointmentRepositoryInterface;
 import com.example.basic.appointments.application.utils.AppointmentMapper;
+import com.example.basic.appointments.application.utils.Constants;
 import com.example.basic.appointments.application.utils.builders.ResponseBuilder;
 import com.example.basic.appointments.domain.models.Appointment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -31,7 +34,12 @@ public class AppointmentService implements AppointmentUseCases {
 
     @Override
     public Mono<GenericResponse> cancelAppointment(String appointmentId) {
-        return null;
+        return appointmentRepository.updateAppointment(appointmentId)
+            .thenReturn(GenericResponse.builder()
+                .responseStatus(Constants.VALID)
+                .details("Canceling appointment")
+                .data(List.of())
+                .build());
     }
 
     @Override

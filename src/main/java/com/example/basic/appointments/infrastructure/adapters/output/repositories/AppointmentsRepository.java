@@ -2,6 +2,7 @@ package com.example.basic.appointments.infrastructure.adapters.output.repositori
 
 import com.example.basic.appointments.application.ports.output.repository.AppointmentRepositoryInterface;
 import com.example.basic.appointments.domain.models.Appointment;
+import com.example.basic.appointments.domain.models.AppointmentStatus;
 import com.example.basic.appointments.domain.services.AppointmentValidationService;
 import com.example.basic.appointments.infrastructure.repositories.AppointmentRepository;
 import com.example.basic.exceptions.throwables.DateFormatExc;
@@ -43,7 +44,13 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
     public Mono<Appointment> updateAppointment(String appointmentId) {
         log.info("request.adapters.output.repository::updateAppointment");
 
-        return Mono.error(new UnsupportedOperationException("Update not implemented yet"));
+        return appointmentRepository.findById(appointmentId)
+            .switchIfEmpty(Mono.error(new NotFoundExc("Appointment not found")))
+            .map(foundAppointment -> {
+                foundAppointment.setAppointmentStatus(AppointmentStatus.CANCELED);
+                return foundAppointment;
+            })
+            .flatMap(appointmentRepository::save);
     }
 
     @Override
@@ -51,6 +58,7 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
         log.info("request.adapters.output.repository::getAppointmentById()");
 
         return appointmentRepository.findById(appointmentId)
+            .filter(foundAppointment -> foundAppointment.getAppointmentStatus().equals(AppointmentStatus.ACTIVE))
             .switchIfEmpty(Mono.error(new NotFoundExc("Appointment not found")));
     }
 
@@ -59,6 +67,7 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
         log.info("request.adapters.output.repository::getAppointmentsByPatient()");
 
         return appointmentRepository.findByPatientId(patientId)
+            .filter(foundAppointment -> foundAppointment.getAppointmentStatus().equals(AppointmentStatus.ACTIVE))
             .switchIfEmpty(Mono.error(new NotFoundExc("The patient has no appointments")));
     }
 
@@ -67,6 +76,7 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
         log.info("request.adapters.output.repository::getAppointmentsByDoctor()");
 
         return appointmentRepository.findByDoctorId(doctorId)
+            .filter(foundAppointment -> foundAppointment.getAppointmentStatus().equals(AppointmentStatus.ACTIVE))
             .switchIfEmpty(Mono.error(new NotFoundExc("No appointments have been registered")));
     }
 
@@ -80,6 +90,7 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
             validationService.validateDateRange(mappedInit, mappedEnd);
 
             return appointmentRepository.findByAppointmentDateBetween(mappedInit, mappedEnd)
+                .filter(foundAppointment -> foundAppointment.getAppointmentStatus().equals(AppointmentStatus.ACTIVE))
                 .switchIfEmpty(Flux.error(new NotFoundExc("There are no appointments available")));
         } catch (Exception e) {
             log.error("Date range validation failed: " + e.getMessage());
@@ -92,6 +103,7 @@ public class AppointmentsRepository implements AppointmentRepositoryInterface {
         log.info("request.adapters.output.repository::getAppointmentsByPersons()");
 
         return appointmentRepository.findByPatientIdAndDoctorId(patientId, doctorId)
+            .filter(foundAppointment -> foundAppointment.getAppointmentStatus().equals(AppointmentStatus.ACTIVE))
             .switchIfEmpty(Mono.error(new NotFoundExc("The appointment made by the patient " + patientId + " with the doctor " + doctorId + " does not exist")));
     }
 }

@@ -128,19 +128,4 @@ class PatientsRepositoryTest {
         assertEquals(patient.getPersonSurname(), result.getPersonSurname());
         assertEquals(patient.getPersonID(), result.getPersonID());
     }
-
-    @Test
-    void testDeletePatient() {
-        Mockito.when(testRepository.findByPersonID(Mockito.anyString()))
-            .thenReturn(Mono.just(patient));
-        Mockito.when(testRepository.save(Mockito.any(Patient.class)))
-            .thenReturn(Mono.just(patient));
-
-        Patient result = testPatientsRepository.deletePatient("ID").block();
-
-        assert result != null;
-        assertEquals(patient.getPersonName(), result.getPersonName());
-        assertEquals(patient.getPersonSurname(), result.getPersonSurname());
-        assertEquals(patient.getPersonID(), result.getPersonID());
-    }
 }

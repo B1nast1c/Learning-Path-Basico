@@ -2,6 +2,7 @@ package com.example.basic.appointments.application.utils.builders;
 
 import com.example.basic.appointments.application.ports.output.models.AppointmentsResponse;
 import com.example.basic.appointments.application.ports.output.models.GenericResponse;
+import com.example.basic.appointments.application.utils.AppointmentMapper;
 import com.example.basic.appointments.application.utils.AppointmentRequestMapper;
 import com.example.basic.appointments.application.utils.Constants;
 import com.example.basic.appointments.domain.models.Appointment;
@@ -73,4 +74,5 @@ public class ResponseBuilder {
             .requestDetail("APPOINTMENT STATUS: " + appointment.getAppointmentStatus())
             .build());
     }
+
 }

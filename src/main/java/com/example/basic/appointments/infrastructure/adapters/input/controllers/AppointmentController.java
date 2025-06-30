@@ -3,6 +3,7 @@ package com.example.basic.appointments.infrastructure.adapters.input.controllers
 import com.example.basic.appointments.application.ports.input.cases.AppointmentRequestUseCases;
 import com.example.basic.appointments.application.ports.input.cases.AppointmentUseCases;
 import com.example.basic.appointments.application.ports.input.models.RequestModel;
+import com.example.basic.appointments.application.ports.output.models.AppointmentsResponse;
 import com.example.basic.appointments.application.ports.output.models.GenericResponse;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -23,11 +24,6 @@ public class AppointmentController {
     @PostMapping("/request")
     public Mono<GenericResponse> requestAppointment(@RequestBody RequestModel request) {
         return appointmentRequestUseCases.createRequest(request);
-    }
-
-    @PutMapping("/cancel/{appointmentId}")
-    public Mono<GenericResponse> cancelAppointment(@PathVariable String appointmentId) {
-        return appointmentUseCases.cancelAppointment(appointmentId);
     }
 
     @GetMapping("/detail/{appointmentId}")
@@ -53,5 +49,10 @@ public class AppointmentController {
     @GetMapping("/detailsBy")
     public Mono<GenericResponse> getAppointmentsPersons(@RequestParam String patientId, @RequestParam String doctorId) {
         return appointmentUseCases.getSpecificAppointment(patientId, doctorId);
+    }
+
+    @PutMapping("/cancel/{appointmentId}")
+    public Mono<GenericResponse> cancelAppointment(@PathVariable String appointmentId) {
+        return appointmentUseCases.cancelAppointment(appointmentId);
     }
 }

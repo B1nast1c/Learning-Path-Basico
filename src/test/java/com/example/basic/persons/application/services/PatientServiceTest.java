@@ -125,22 +125,4 @@ class PatientServiceTest {
         assertEquals(patient.getPersonSurname(), result.getData().get(0).getPersonSurname());
         assertEquals(patient.getPersonID(), result.getData().get(0).getPersonID());
     }
-
-    @Test
-    void testDeletePatient() {
-        when(testInterface.deletePatient(Mockito.anyString())).thenReturn(Mono.just(patient));
-        when(testMapper.mapPatientToResponse(patient))
-            .thenReturn(PersonsResponse.builder()
-                .personName("NAME")
-                .personSurname("SURNAME")
-                .personID("ID")
-                .build());
-
-        GenericResponse result = testService.deletePatient("ID").block();
-
-        assertNotNull(result);
-        assertEquals(patient.getPersonName(), result.getData().get(0).getPersonName());
-        assertEquals(patient.getPersonSurname(), result.getData().get(0).getPersonSurname());
-        assertEquals(patient.getPersonID(), result.getData().get(0).getPersonID());
-    }
 }

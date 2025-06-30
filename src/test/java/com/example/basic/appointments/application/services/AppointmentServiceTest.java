@@ -4,6 +4,7 @@ import com.example.basic.appointments.application.ports.output.models.Appointmen
 import com.example.basic.appointments.application.ports.output.models.GenericResponse;
 import com.example.basic.appointments.application.ports.output.repository.AppointmentRepositoryInterface;
 import com.example.basic.appointments.application.utils.AppointmentMapper;
+import com.example.basic.appointments.application.utils.Constants;
 import com.example.basic.appointments.domain.models.Appointment;
 import com.example.basic.appointments.domain.models.AppointmentStatus;
 import org.junit.jupiter.api.Assertions;
@@ -148,7 +149,13 @@ class AppointmentServiceTest {
 
     @Test
     void testCancelAppointmentReturnsNull() {
-        Mono<GenericResponse> result = service.cancelAppointment("APT-TEST");
-        Assertions.assertNull(result);
+        Mockito.when(repository.updateAppointment(Mockito.anyString()))
+            .thenReturn(Mono.just(testAppointment));
+
+        GenericResponse result = service.cancelAppointment("APT-TEST").block();
+
+        assert result != null;
+        Assertions.assertEquals(Constants.VALID, result.getResponseStatus());
+        Assertions.assertEquals("Canceling appointment", result.getDetails());
     }
 }
