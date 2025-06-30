@@ -16,7 +16,7 @@ public class AppointmentMapper {
         this.mapper = modelMapper;
     }
 
-    public <T> AppointmentsResponse mapAppointmentToResponse(Appointment request) {
+    public AppointmentsResponse mapAppointmentToResponse(Appointment request) {
         AppointmentsResponse response = mapper.map(request, AppointmentsResponse.class);
         response.setRequestDetail("APPOINTMENT STATUS: " + request.getAppointmentStatus().toString());
         return response;

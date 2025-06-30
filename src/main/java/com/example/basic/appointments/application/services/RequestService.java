@@ -5,7 +5,6 @@ import com.example.basic.appointments.application.ports.input.cases.AppointmentU
 import com.example.basic.appointments.application.ports.input.models.RequestModel;
 import com.example.basic.appointments.application.ports.output.models.GenericResponse;
 import com.example.basic.appointments.application.ports.output.repository.RequestRepositoryInterface;
-import com.example.basic.appointments.application.utils.AppointmentMapper;
 import com.example.basic.appointments.application.utils.AppointmentRequestMapper;
 import com.example.basic.appointments.application.utils.Constants;
 import com.example.basic.appointments.application.utils.builders.AppointmentBuilder;

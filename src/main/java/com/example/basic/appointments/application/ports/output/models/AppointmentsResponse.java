@@ -1,6 +1,5 @@
 package com.example.basic.appointments.application.ports.output.models;
 
-import com.example.basic.persons.domain.models.Specializations;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

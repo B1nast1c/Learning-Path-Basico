@@ -2,6 +2,7 @@ package com.example.basic.appointments.application.utils;
 
 import com.example.basic.appointments.application.ports.output.models.AppointmentsResponse;
 import com.example.basic.appointments.domain.models.Appointment;
+import com.example.basic.appointments.domain.models.AppointmentRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class AppointmentRequestMapper {
         this.mapper = modelMapper;
     }
 
-    public <T> AppointmentsResponse mapAppointmentRequestToResponse(T request) {
+    public AppointmentsResponse mapAppointmentRequestToResponse(AppointmentRequest request) {
         return mapper.map(request, AppointmentsResponse.class);
     }
 }
