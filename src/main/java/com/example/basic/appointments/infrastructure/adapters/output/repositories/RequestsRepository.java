@@ -4,7 +4,9 @@ import com.example.basic.appointments.application.ports.output.repository.Reques
 import com.example.basic.appointments.domain.models.AppointmentRequest;
 import com.example.basic.appointments.domain.services.AppointmentRequestValidationService;
 import com.example.basic.appointments.infrastructure.repositories.RequestRepository;
-import com.example.basic.exceptions.throwables.*;
+
+import com.example.basic.exceptions.throwables.DuplicateExc;
+
 import com.example.basic.persons.domain.models.Doctor;
 import com.example.basic.persons.domain.models.Patient;
 import com.example.basic.persons.insfrastructure.repositories.DoctorRepository;

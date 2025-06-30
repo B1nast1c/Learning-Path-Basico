@@ -1,6 +1,12 @@
 package com.example.basic.exceptions;
 
-import com.example.basic.exceptions.throwables.*;
+import com.example.basic.exceptions.throwables.NotFoundExc;
+import com.example.basic.exceptions.throwables.DuplicateExc;
+import com.example.basic.exceptions.throwables.TakenAppointmentExc;
+import com.example.basic.exceptions.throwables.SpecialityExc;
+import com.example.basic.exceptions.throwables.DateFormatExc;
+import com.example.basic.exceptions.throwables.GenericExc;
+
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 

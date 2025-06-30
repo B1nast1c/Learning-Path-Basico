@@ -3,7 +3,12 @@ package com.example.basic.appointments.domain.services;
 import com.example.basic.appointments.domain.models.AppointmentRequest;
 import com.example.basic.appointments.domain.validations.AppointmentValidations;
 import com.example.basic.appointments.domain.validations.DateValidations;
-import com.example.basic.exceptions.throwables.*;
+import com.example.basic.exceptions.throwables.NotFoundExc;
+import com.example.basic.exceptions.throwables.DuplicateExc;
+import com.example.basic.exceptions.throwables.SpecialityExc;
+import com.example.basic.exceptions.throwables.DateFormatExc;
+import com.example.basic.exceptions.throwables.GenericExc;
+
 import com.example.basic.persons.domain.models.Doctor;
 import com.example.basic.persons.domain.models.Patient;
 import org.springframework.stereotype.Service;
