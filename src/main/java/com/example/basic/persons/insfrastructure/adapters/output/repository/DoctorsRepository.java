@@ -44,7 +44,8 @@ public class DoctorsRepository implements DoctorRepositoryInterface {
     @Override
     public Flux<Doctor> findAll() {
         log.info("doctor.adapters.output.repository::findAll()");
-        return doctorRepository.findAll();
+        return doctorRepository.findAll()
+            .filter(Person::isActive);
     }
 
     /**
@@ -61,7 +62,8 @@ public class DoctorsRepository implements DoctorRepositoryInterface {
         return Mono.fromCallable(() -> doctorValidationService.validateSpeciality(speciality))
             .flatMapMany(isValid -> {
                 if (isValid.equals(Boolean.TRUE)) {
-                    return doctorRepository.findBySpecializationIgnoreCaseOrderByPersonNameAsc(speciality);
+                    return doctorRepository.findBySpecializationIgnoreCaseOrderByPersonNameAsc(speciality)
+                        .filter(Person::isActive);
                 }
                 return Flux.error(new SpecialityExc("Invalid speciality"));
             })
@@ -79,6 +81,7 @@ public class DoctorsRepository implements DoctorRepositoryInterface {
     public Mono<Doctor> findById(String doctorId) {
         log.info("doctor.adapters.output.repository::findById()");
         return doctorRepository.findByPersonID(doctorId)
+            .filter(Person::isActive)
             .switchIfEmpty(Mono.error(new NotFoundExc("Doctor not found")));
     }
 
