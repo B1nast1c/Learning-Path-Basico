@@ -2,4 +2,10 @@ server:
   port: 9999
 spring:
   application:
-    name: RetoTecnicoIBK
+    name: PathBasicoIBK
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/LearningPath
+      auto-index-creation: true
+  main:
+    web-application-type: reactive
