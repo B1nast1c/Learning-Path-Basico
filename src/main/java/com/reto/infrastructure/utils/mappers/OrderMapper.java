@@ -1,2 +1,4 @@
-package com.reto.infrastructure.utils.mappers;public class OrderMapper {
+package com.reto.infrastructure.utils.mappers;
+
+public class OrderMapper {
 }

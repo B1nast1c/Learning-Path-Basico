@@ -1,18 +1,13 @@
 package com.reto.infrastructure.utils.builders;
 
-import com.reto.domain.models.Order;
-import com.reto.domain.models.Product;
-import com.reto.infrastructure.adapters.models.dto.OrderDTO;
-import com.reto.infrastructure.adapters.models.dto.ProductDTO;
+import com.reto.domain.models.OrderProduct;
+import com.reto.infrastructure.adapters.models.dto.OrderProductDTO;
 
-public class ProductBuilder {
-    public static ProductDTO buildProductDTO(Product product) {
-        return ProductDTO.builder()
-            .id(product.getId())
-            .name(product.getName())
-            .price(product.getPrice())
-            .availableQuantity(product.getAvailableQuantity())
-            .orderProducts(p)
+public class OrderProductBuilder {
+    public static OrderProductDTO buildOrderProductDTO(OrderProduct orderProduct) {
+        return OrderProductDTO.builder()
+            .id(orderProduct.getId())
+            .productQuantity(orderProduct.getProductQuantity())
             .build();
     }
 }

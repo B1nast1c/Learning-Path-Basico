@@ -1,10 +1,9 @@
 package com.reto.application.ports.output.repository;
 
-import com.reto.domain.models.Order;
+import com.reto.domain.models.Product;
 
 import java.util.List;
 
-public interface OrderRepositoryInterface {
-    void updateProductInOrder(long orderId, long productId, int quantity);
-    List<Order> findAllOrders();
+public interface ProductRepositoryInterface {
+    List<Product> findAllOrders();
 }

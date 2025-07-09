@@ -5,17 +5,15 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 
 @Getter
 @Setter
-@Builder
 @Entity
-@NoArgsConstructor
+@Table(name = "orders_products")
 public class OrderProduct {
     @EmbeddedId
     private OrderProductId id = new OrderProductId();
@@ -31,6 +29,8 @@ public class OrderProduct {
     private Product product;
 
     private int productQuantity;
+
+    public OrderProduct(){}
 
     public OrderProduct(Order order, Product product, int quantity) {
         this.order = order;

@@ -1,2 +1,13 @@
-package com.reto.configuration;public class MapperConfig {
+package com.reto.configuration;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MapperConfig {
+    @Bean
+    public ModelMapper personModelMapper() {
+        return new ModelMapper();
+    }
 }

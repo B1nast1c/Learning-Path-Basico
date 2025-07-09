@@ -1,4 +1,4 @@
-package com.reto.infrastructure.adapters.models;
+package com.reto.infrastructure.adapters.models.request;
 
 import lombok.Builder;
 import lombok.Getter;
