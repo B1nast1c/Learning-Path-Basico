@@ -24,6 +24,7 @@ public class OrderRepositoryImp implements OrderRepositoryInterface {
         this.orderProductRepository = orderProduct;
     }
 
+    @Transactional // Integridad de datos - Operaciones en una transacción
     @Override
     public void updateProductInOrder(long orderId, long productId, int quantity) {
         // Lógica de negocio
