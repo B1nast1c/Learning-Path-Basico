@@ -22,7 +22,7 @@ public class PatientValidationService {
      */
     public void validate(Patient patient) {
         if (!FieldsValidations.validateInput(patient.getPersonID())) {
-            throw new SpecialityExc("Invalid patient ID format");
+            throw new SpecialityExc("Invalid patient ID format, must be 8 digits");
         }
         if (!DateValidations.validateBirthDate(patient.getBirthDate())) {
             throw new SpecialityExc("Invalid birth date");

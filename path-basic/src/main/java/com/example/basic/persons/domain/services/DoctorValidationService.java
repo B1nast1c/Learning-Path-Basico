@@ -23,7 +23,9 @@ public class DoctorValidationService {
      */
     public void validate(Doctor doctor) {
         if (!validSpeciality(doctor.getSpecialization())) {
-            throw new SpecialityExc("Invalid doctor speciality");
+            throw new SpecialityExc(
+                    "Invalid doctor speciality, must be one of: CARDIOLOGY - NEUROLOGY - PEDIATRICS - OBSTETRICS - EMERGENCY"
+            );
         }
         if (!FieldsValidations.validateInput(doctor.getPersonID())) {
             throw new GenericExc("Invalid doctor ID format");

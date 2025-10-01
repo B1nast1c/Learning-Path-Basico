@@ -40,7 +40,7 @@ public class AppointmentValidationService {
         }
 
         if (!DateValidations.validateHour(appointment.getAppointmentDate())) {
-            throw new DateFormatExc("The appointment must be during working hours");
+            throw new DateFormatExc("The appointment must be during working hours, from 8:00 to 19:00");
         }
     }
 }

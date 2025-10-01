@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "94b6326e-6421-4969-abad-02f2059b4bc1",
+		"name": "APPOINTMENTS API",
+		"description": "Colección básica para la API de citas (path-basic). Variables: {{baseUrl}}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "18152988"
+	},
+	"item": [
+		{
+			"name": "PATIENTS",
+			"item": []
+		},
+		{
+			"name": "DOCTORS",
+			"item": []
+		},
+		{
+			"name": "APPOINTMENTS",
+			"item": []
+		},
+		{
+			"name": "Request Appointment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"patientIdRequest\": \"PAT-1-ID\",\n  \"requestSpeciality\": \"Neurology\",\n  \"doctorIdRequest\": \"72163252\",\n  \"requestDate\": \"12/11/2000 12:12\",\n  \"requestDetail\": \"Cita prueba de la API\"\n}"
+				},
+				"url": "{{baseUrl}}/api/appointments/request"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Doctor Appointments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseUrl}}/api/appointments/doctor/DOC-1-ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Patient Appointments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseUrl}}/api/appointments/patient/PAT-1-ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Appointments Range",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/appointments/range?initDate=01/01/2000&endDate=31/12/2010",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"appointments",
+						"range"
+					],
+					"query": [
+						{
+							"key": "initDate",
+							"value": "01/01/2000"
+						},
+						{
+							"key": "endDate",
+							"value": "31/12/2010"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Appointment By Patient & Doctor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/appointments/detailsBy?patientId=PAT-1-ID&doctorId=DOC-1-ID",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"appointments",
+						"detailsBy"
+					],
+					"query": [
+						{
+							"key": "patientId",
+							"value": "PAT-1-ID"
+						},
+						{
+							"key": "doctorId",
+							"value": "DOC-1-ID"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Appointment",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": "{{baseUrl}}/api/appointments/cancel/APT-PAT-1-ID-72163252-15112000-12"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:9999",
+			"type": "string"
+		}
+	]
+}

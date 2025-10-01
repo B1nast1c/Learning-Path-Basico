@@ -63,7 +63,7 @@ public class AppointmentRequestValidationService {
 
                         // Verifica que la hora de la cita esté dentro del horario laboral
                         if (!DateValidations.validateHour(request.getRequestDate())) {
-                            return Mono.error(new DateFormatExc("The appointment request must be during working time"));
+                            return Mono.error(new DateFormatExc("The appointment request must be during working time, from 8:00 to 19:00"));
                         }
 
                         // Asigna los nombres completos del paciente y del doctor a la solicitud
