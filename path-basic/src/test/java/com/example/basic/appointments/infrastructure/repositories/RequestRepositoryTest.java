@@ -1,54 +1,79 @@
 package com.example.basic.appointments.infrastructure.repositories;
 
 import com.example.basic.appointments.domain.models.AppointmentRequest;
-import com.example.basic.persons.domain.models.Specializations;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
 import java.time.LocalDateTime;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 @DataMongoTest
+@ExtendWith(MockitoExtension.class)
 class RequestRepositoryTest {
-    @Autowired
-    RequestRepository requestRepository;
+
+    @Mock
+    private RequestRepository requestRepository;
+
+    private AppointmentRequest requestTest1;
 
     @BeforeEach
     void setUp() {
-        AppointmentRequest appointmentRequest = AppointmentRequest.builder()
-            .requestId("REQ-TEST")
-            .patientIdRequest("PATIENT-ID")
-            .patientFullName("PATIENT")
-            .doctorIdRequest("DOCTOR-ID")
-            .doctorFullName("DOCTOR")
-            .requestDate(LocalDateTime.now())
-            .isValid(true)
-            .requestDetail("")
-            .requestSpeciality(Specializations.OBSTETRICS)
-            .build();
-
-        requestRepository.deleteAll()
-            .thenMany(requestRepository.saveAll(Flux.just(appointmentRequest)))
-            .blockLast();
+        requestTest1 = AppointmentRequest.builder()
+                .requestId("REQ-TEST-1")
+                .doctorIdRequest("DOC-ID-1")
+                .patientIdRequest("PATIENT-ID-1")
+                .requestDate(LocalDateTime.of(2024, 6, 1, 10, 0))
+                .build();
     }
 
     @Test
-    void testExistsByRequestId() {
-        Mono<Boolean> exists = requestRepository.existsByRequestId("REQ-TEST");
+    void existsByRequestIdReturnsTrue() {
+        Mockito.when(requestRepository.existsByRequestId("REQ-TEST-1"))
+                .thenReturn(Mono.just(true));
 
-        StepVerifier.create(exists)
-            .expectNext(true)
-            .verifyComplete();
+        StepVerifier.create(requestRepository.existsByRequestId("REQ-TEST-1"))
+                .expectNext(true)
+                .verifyComplete();
     }
 
     @Test
-    void testFindByDoctorIdRequestAndRequestDate() {
-        StepVerifier.create(requestRepository.findByDoctorIdRequestAndRequestDate("DOCTOR-ID", LocalDateTime.of(2025, 6, 29, 10, 0)))
-            .verifyComplete();
+    void existsByRequestIdReturnsFalse() {
+        Mockito.when(requestRepository.existsByRequestId("REQ-404"))
+                .thenReturn(Mono.just(false));
+
+        StepVerifier.create(requestRepository.existsByRequestId("REQ-404"))
+                .expectNext(false)
+                .verifyComplete();
+    }
+
+    @Test
+    void findByDoctorIdRequestAndRequestDateReturnsMatchingRequests() {
+        Mockito.when(requestRepository.findByDoctorIdRequestAndRequestDate(eq("DOC-ID-1"), any(LocalDateTime.class)))
+                .thenReturn(Flux.just(requestTest1));
+
+        StepVerifier
+                .create(requestRepository.findByDoctorIdRequestAndRequestDate("DOC-ID-1",
+                        LocalDateTime.of(2024, 6, 1, 10, 0)))
+                .expectNextMatches(r -> r.getRequestId().equals("REQ-TEST-1") && r.getDoctorIdRequest().equals("DOC-ID-1"))
+                .verifyComplete();
+    }
+
+    @Test
+    void findByDoctorIdRequestAndRequestDateReturnsEmpty() {
+        Mockito.when(requestRepository.findByDoctorIdRequestAndRequestDate(eq("DOC-3"), any(LocalDateTime.class)))
+                .thenReturn(Flux.empty());
+
+        StepVerifier
+                .create(requestRepository.findByDoctorIdRequestAndRequestDate("DOC-3",
+                        LocalDateTime.of(2024, 6, 3, 12, 0)))
+                .verifyComplete();
     }
 }
-
